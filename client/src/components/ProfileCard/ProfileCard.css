@@ -1,0 +1,50 @@
+.ProfileCard{
+    border-radius: 1.5rem;
+    flex-direction: column;
+    overflow-x :clip;
+    background: var(--cardColor);
+}
+
+.ProfileImages>img:nth-of-type(1){
+    width: 100%;
+}
+.ProfileImages>img:nth-of-type(2){
+    width: 6rem;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -3rem;
+    box-shadow: var(--profileShadow);
+}
+
+.ProfileName>span:nth-of-type(1){
+    font-weight: bold;
+}
+
+.FollowStatus>hr{
+    width: 85%;
+    border: 1px solid var(--hrColor);
+}
+
+.Follow>span:nth-of-type(1){
+    font-weight: bold;
+    
+}
+.Follow>span:nth-of-type(2){
+    color: var(--gray);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.vl{
+    height: 120%;
+    border-left: 2px solid var(--hrColor);
+}
+
+.ProfileCard>span{
+    font-weight: bold;
+    color: orange;
+    cursor: pointer;
+    justify-content: center;
+    align-self: center;
+    margin-bottom: 1rem;
+}
