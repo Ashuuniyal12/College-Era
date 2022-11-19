@@ -1,0 +1,32 @@
+.infoInput{
+    border: none;
+    outline: none;
+    background-color: var(--inputColor);
+    border-radius: 8px;
+    padding: 30px;
+    flex:1;
+}
+
+.infoForm>div{
+    display: flex;
+    gap: 1rem;
+    height: 2rem;
+    width: 100%;
+}
+
+.infoButtton{
+    width: 7rem;
+    height: 3rem;
+    align-self: flex-end;
+}
+.authForm{
+    background-color: var(--cardColor);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.authForm>div{
+    height: 3rem;
+    width: 100%;
+    justify-content: center;
+}
