@@ -4,6 +4,8 @@ import ProfileImage from '../../img/profileImg.png'
 import './ProfileCard.css'
 
 const ProfileCard = () => {
+
+    const ProflePage = true;
     return (
         <div className="ProfileCard flex relative gap-4">
             <div className="ProfileImages relative flex flex-col items-center justify-center">
@@ -17,7 +19,7 @@ const ProfileCard = () => {
             </div>
 
             <div className="FollowStatus flex flex-col items-center gap-3">
-                <hr/>
+                <hr />
                 <div className='flex gap-4 w-4/5 items-center justify-around '>
                     <div className="Follow flex flex-col gap-1 items-center justify-center">
                         <span>54354</span>
@@ -28,14 +30,27 @@ const ProfileCard = () => {
                         <span>1</span>
                         <span>Followers</span>
                     </div>
+
+                    {ProflePage && (
+                        <>
+                            <div className="vl"></div>
+
+                            <div className="Follow flex flex-col gap-1 items-center justify-center">
+                                <span>3</span>
+                                <span>Posts</span>
+                            </div>
+                        </>
+
+                    )}
                 </div>
                 <hr />
 
             </div>
-
-            <span>
-                My Profile
-            </span>
+            {!ProflePage && (
+                <span>
+                    My Profile
+                </span>)
+            }
 
         </div>
 
