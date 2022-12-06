@@ -1,99 +1,127 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Auth.css'
 import Logo from '../../img/mainlogo.png'
+import {useDispatch, useSelector} from 'react-redux' 
+import { signUp , logIn} from '../../actions/AuthAction'
+
 const Auth = () => {
+    const [isSignUp, setIsSignUp] = useState(true);
+
+    const [data, setData] = useState({ firstname: '', lastname: '', email: '', password: '', confirmpassword: '', username: '' });
+
+    const [confirmPass , setConfirmPass] = useState(true);
+
+    const dispatch = useDispatch();
+    
+    const loading  = useSelector((state) => state.authReducer.loading);
+
+    const onSignUpChange = () => {
+        setIsSignUp(!isSignUp)
+        resetForm()
+    }
+
+    const handleChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmitChange = (e) => {
+        e.preventDefault();
+        // console.log(data)
+        if(isSignUp){
+            data.password === data.confirmpassword ? dispatch(signUp(data)) : setConfirmPass(false)
+          
+        }else{
+            dispatch(logIn(data))
+        }
+        
+    }
+
+    const resetForm = () => {
+        setConfirmPass(true);
+        setData({ firstname: '', lastname: '', email: '', password: '', confirmpassword: '', username: '' })
+    }
+
     return (
         <div className="Auth flex items-center justify-center min-h-screen gap-16 relative">
+            {/* Left Side */}
+
             <div className="a-left">
                 <img src={Logo} alt="logo" style={{ width: '200px', height: 'auto' }} />
             </div>
 
-            <SignUp />
-            {/* 2*pos,start,mid,idx,val<Login /> */}
+            {/* Right Side  */}
+            <div className="a-right">
+                <form className="infoForm authForm flex flex-col justify-center items-center gap-8" onSubmit={handleSubmitChange}>
 
-        </div>
-    )
-}
+                    <b><h4>{isSignUp ? 'Sign Up' : 'Log In'}</h4></b>
 
-function Login() {
-    return (
-        <div className="a-right">
-            <form className="infoForm authForm flex flex-col justify-center items-center gap-8">
-                <b><h4>Login</h4></b>
-                <div>
-                    <input type="text "
-                        placeholder='username'
-                        name="useName"
-                        className="infoInput" />
-                </div>
-                <div>
-                    <input type="email "
-                        placeholder='email'
-                        name="email"
-                        className="infoInput" />
-                </div>
-                <div>
-                    <input type="password "
-                        placeholder='password'
-                        name="password"
-                        className="infoInput" />
-                </div>
-                <div>
-                    <span style={{ fontSize: '18px' }}>Don't have an account. SignUp!</span>
-                    <button className='button infoButtton' type='submit'>LogIn</button>
-                </div>
+                    {isSignUp &&
+                        <div>
+                            <input type="text"
+                                placeholder='FirstName'
+                                className='infoInput'
+                                name="firstname"
+                                value={data.firstname}
+                                onChange={handleChange} />
+                            <input type="text"
+                                placeholder='LastName'
+                                className='infoInput'
+                                name="lastname"
+                                value={data.lastname}
+                                onChange={handleChange} />
+                        </div>
+                    }
 
-            </form>
-        </div>
-    )
-}
 
-function SignUp() {
-    return (
-        <div className="a-right">
-            <form className="infoForm authForm flex flex-col justify-center items-center gap-8">
+                    <div>
+                        <input type="text "
+                            placeholder='username'
+                            name="username"
+                            className="infoInput"
+                            value={data.username}
+                            onChange={handleChange} />
+                    </div>
+                    <div>
+                        <input type="email "
+                            placeholder='email'
+                            name="email"
+                            className="infoInput"
+                            value={data.email}
+                            onChange={handleChange} />
+                    </div>
+                    <div>
+                        <input type="password"
+                            placeholder='password'
+                            name="password"
+                            className="infoInput"
+                            value={data.password}
+                            onChange={handleChange}
+                        />
 
-                <b><h4>Sign Up</h4></b>
-                <div>
-                    <input type="text"
-                        placeholder='FirstName'
-                        className='infoInput'
-                        name="firstname" />
-                    <input type="text"
-                        placeholder='LastName'
-                        className='infoInput'
-                        name="lasttname" />
-                </div>
+                        {isSignUp &&
+                            <input type="password"
+                                placeholder='Confirm Password'
+                                name="confirmpassword"
+                                className="infoInput"
+                                value={data.confirmpassword}
+                                onChange={handleChange} />
+                        }
 
-                <div>
-                    <input type="text "
-                        placeholder='username'
-                        name="useName"
-                        className="infoInput" />
-                </div>
-                <div>
-                    <input type="email "
-                        placeholder='email'
-                        name="email"
-                        className="infoInput" />
-                </div>
-                <div>
-                    <input type="password "
-                        placeholder='password'
-                        name="password"
-                        className="infoInput" />
-                    <input type="password "
-                        placeholder='Confirm Password'
-                        name="confirmPassword"
-                        className="infoInput" />
-                </div>
+                    </div>
+                    <span className = 'self-end mr-1 text-sm' style = {{display : confirmPass ? "none" : "block" , color :'red'}}>
+                        * Confirm Password must be same as Password
+                    </span>
 
-                <div>
-                    <span style={{ fontSize: '16px' }}>Already have an account. Login!</span>
-                    <button className='button infoButtton' type='submit'>SignUp</button>
-                </div>
-                
-            </form>
+                    <div>
+                        <span style={{ fontSize: '16px', cursor: 'pointer' }}
+                            onClick={onSignUpChange}>{isSignUp ? 'Already have an account. Login!' : "Don't have an Account SignUp"}
+                        </span>
+                        <button className='button infoButtton' disabled= {loading} type='submit'>{loading? "loading...":isSignUp ? 'SignUp' : 'LogIn'}</button>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
     )
 }

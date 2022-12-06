@@ -10,13 +10,13 @@
 
 .Search>input{
     border: none;
-    background-color: transparent;
+    background-color: var(--inputColor);
     outline: none;
 }
 .s-icon{
-    color: var(--gray);
+    color: var(--whiteshade2);
     font-size: 1.5rem;
-    background: linear-gradient(106.23deg,#f99827,#f95f35 100%);
+    background: linear-gradient(106.23deg,#2FA4E4,#341365 100%);
     border-radius: 5px;
     padding: 4px;
     color: white;
