@@ -23,3 +23,7 @@ export const signUp=(formData)=>async(dispatch)=>{
         dispatch({type:'AUTH_FAIL',payload:error});
     }
 }
+
+export const logout=()=>async (dispatch)=>{
+    dispatch({type:'LOG_OUT'});
+}

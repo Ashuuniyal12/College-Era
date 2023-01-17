@@ -42,7 +42,7 @@
 
 .ProfileCard>span{
     font-weight: bold;
-    color: orange;
+    color: var(--blue2);
     cursor: pointer;
     justify-content: center;
     align-self: center;

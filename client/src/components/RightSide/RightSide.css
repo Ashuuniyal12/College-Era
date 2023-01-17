@@ -2,6 +2,10 @@
     width:1.5rem;
     height:1.5rem;
 }
+.icon:hover{
+    color:#341365;
+    cursor: pointer;
+}
 .r-button{
     height: 3rem;
     width: 80%;

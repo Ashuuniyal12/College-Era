@@ -1,42 +1,58 @@
-import React from 'react'
-import CoverImage from '../../img/cover.jpg'
-import ProfileImage from '../../img/profileImg.png'
+import React  ,{useEffect , useState}from 'react'
 import './ProfileCard.css'
+import { Icon } from '@iconify/react';
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import * as UserApi from '../../API/UserRequest'
 
-const ProfileCard = () => {
+const ProfileCard = ({location}) => {
 
-    const ProflePage = true;
+    let width= "auto";
+    if(location !== "profilePage"){
+        width = "18rem"
+    }
+
+    const dispatch = useDispatch()
+    const { user } = useSelector(state => state.authReducer.authData)
+    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
+    const posts = useSelector(state => state.postReducer.posts)
+
+
     return (
-        <div className="ProfileCard flex relative gap-4">
+        <div className="ProfileCard flex relative gap-4 "style= {{width: width}}>
             <div className="ProfileImages relative flex flex-col items-center justify-center">
-                <img src={CoverImage} alt="Cover Image" />
-                <img src={ProfileImage} alt="Profile Image" />
+                <img src={user.coverPicture ? serverPublic + user.coverPicture : serverPublic + 'defaultCover.png'} alt="Cover Image" />
+                <img src={user.profilePicture ? serverPublic + user.profilePicture : serverPublic + 'defaultProfile.png'} alt="Profile Image" />
             </div>
 
             <div className="ProfileName flex flex-col items-center mt-12 gap-3">
-                <span>Ashutosh Uniyal</span>
-                <span>Graphic Era</span>
+                <span>{user.firstname} {user.lastname}</span>
+                <div className='flex flex-row items-center'>
+                    <Icon className='mr-1' color="gray" icon="zondicons:education" />
+                    <span>:{user.university ? user.university : "Unknown Institution"}</span>
+                </div>
+
             </div>
 
             <div className="FollowStatus flex flex-col items-center gap-3">
                 <hr />
                 <div className='flex gap-4 w-4/5 items-center justify-around '>
                     <div className="Follow flex flex-col gap-1 items-center justify-center">
-                        <span>54354</span>
+                        <span>{user.following.length}</span>
                         <span>Followings</span>
                     </div>
                     <div className="vl"></div>
                     <div className="Follow flex flex-col gap-1 items-center justify-center">
-                        <span>1</span>
+                        <span>{user.followers.length}</span>
                         <span>Followers</span>
                     </div>
 
-                    {ProflePage && (
+                    {location === "profilePage" && (
                         <>
                             <div className="vl"></div>
 
                             <div className="Follow flex flex-col gap-1 items-center justify-center">
-                                <span>3</span>
+                                <span>{posts.filter((post)=>post.userId === user._id).length}</span>
                                 <span>Posts</span>
                             </div>
                         </>
@@ -46,10 +62,12 @@ const ProfileCard = () => {
                 <hr />
 
             </div>
-            {!ProflePage && (
+            {location === "profilePage" ? " " :
                 <span>
-                    My Profile
-                </span>)
+                    <Link to = {`/profile/${user._id}`}>
+                        My Profile
+                    </Link>
+                </span>
             }
 
         </div>

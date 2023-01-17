@@ -3,10 +3,11 @@ import './PostShare.css'
 import ProfileImg from '../../img/profileImg.png'
 import {UilScenery,  UilPlayCircle, UilLocationPoint, UilSchedule, UilTimes } from '@iconscout/react-unicons'
 import {useDispatch, useSelector} from 'react-redux'
-import { uploadImg } from '../../actions/uploadAction'
-
+import { uploadImg, uploadPost } from '../../actions/uploadAction'
 
 const PostShare = () => {
+    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
+    const loading = useSelector(state => state.postReducer.uploading)
     const dispatch = useDispatch();
     const {user} = useSelector(state => state.authReducer.authData)
     const [img, setImg] = useState(null);
@@ -18,15 +19,19 @@ const PostShare = () => {
             setImg(img);
         }
     }
-    
+    const reset=()=>{
+        setImg(null);
+        desc.current.value='';
+    }
+
     const handleSubmit=(e)=>{
         e.preventDefault();
         
         const newPost= {
-            useId: user._id,
-            desc: desc.current.value,
-            
+            userId: user._id,
+            desc: desc.current.value,    
         }
+        //upload the image part in the server.
         if(img){
             const data = new FormData();
             const fileName = Date.now() + img.name;
@@ -40,12 +45,14 @@ const PostShare = () => {
             }catch(err){
                 console.log(err)
             }
-
         }
+
+        dispatch(uploadPost(newPost))
+        reset();
     }
     return (
         <div className="PostShare flex gap-4 p-4 rounded-2xl">
-            <img src={ProfileImg} alt="ProfileImg" />
+            <img src={user.profilePicture? serverPublic+user.profilePicture : serverPublic+'defaultProfile.png'} alt="ProfileImg" />
             <div>
                 <input ref ={desc} required type="text" placeholder="What's happening" />
 
@@ -68,8 +75,8 @@ const PostShare = () => {
                         <UilSchedule />Shedule
                     </div>
 
-                    <button className='button ps-button' onClick={handleSubmit}>
-                        Share
+                    <button className='button ps-button' disable= {loading} onClick={handleSubmit}>
+                        {loading? "uploading...":'Share'}
                     </button>
 
                     <div className='hidden'>
