@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://collegeera-server.onrender.com",
   "dependencies": {
     "@iconscout/react-unicons": "^1.1.6",
     "@iconscout/unicons": "^4.0.1",
