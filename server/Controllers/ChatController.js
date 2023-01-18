@@ -1,4 +1,4 @@
-import chatModal from '../Modals/ChatModal.js';
+import chatModal from '../Modals/chatModal.js';
 
 export const createChat = async (req, res) => {
     const newChat = new chatModal({
