@@ -1,7 +1,7 @@
-import ChatModal from '../Modals/ChatModal.js';
+import chatModal from '../Modals/ChatModal.js';
 
 export const createChat = async (req, res) => {
-    const newChat = new ChatModal({
+    const newChat = new chatModal({
         members: [req.body.senderId, req.body.receiverId]
     });
 
@@ -15,7 +15,7 @@ export const createChat = async (req, res) => {
 
 export const userChat = async (req, res) => {
     try {
-        const chat = await ChatModal.find({
+        const chat = await chatModal.find({
             members: { $in: [req.params.userID] }
         });
         res.status(200).json(chat);
@@ -26,7 +26,7 @@ export const userChat = async (req, res) => {
 
 export const findChat = async (req, res) => {
     try {
-        const chat = await ChatModal.findOne({
+        const chat = await chatModal.findOne({
             members: { $all: [req.params.firstID, req.params.secondID] },
         });
         res.status(200).json(chat)
