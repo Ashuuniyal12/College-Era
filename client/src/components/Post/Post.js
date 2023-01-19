@@ -20,14 +20,25 @@ const Post = ({ data }) => {
     likePost(data._id, user._id);
     liked ? setLikeCount((prev) => prev - 1) : setLikeCount((prev) => prev + 1)
   }
-
+  console.log("data", data)
   return (
     <div className="Post flex flex-col p-4 gap-4 rounded-2xl" styel={{ backgoundColor: 'var(--cardColor)' }}>
       {/* <div className="profilename flex w-full flex-row h-16 ">
         <img src={ data.userId} alt="img" />
       </div>   */}
-      <img src={data.img ? process.env.REACT_APP_PUBLIC_FOLDER + data.img : "NOT FOUND"} alt="image" />
-
+      <div className=' profileDetails flex flex-row gap-2 '>
+        <img className="rounded-full w-10 h-10" src={data.profilePicture ? process.env.REACT_APP_PUBLIC_FOLDER + data.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"} />
+        <span >{data.name}</span>
+      </div>
+      <div className="Details">
+        <span><b>{data.username} </b></span>
+        <span>{data.desc}</span>
+      </div>
+      { data.img &&
+        <div className='image-holder'>
+       <img className="" src={process.env.REACT_APP_PUBLIC_FOLDER + data.img} alt="image" />
+      </div>
+      }
       <div className="PostReact flex items-start gap-6">
 
         <Icon icon={heart} color="#2FA4E4" width="30" height="30" onClick={handleLikePost} style={{ cursor: "pointer" }} />
@@ -36,10 +47,6 @@ const Post = ({ data }) => {
       </div>
 
       <span style={{ color: 'var(--gray)', fontSize: '12px' }}>{likeCount} likes</span>
-      <div className="Details">
-        <span><b>{data.Name} </b></span>
-        <span>{data.desc}</span>
-      </div>
     </div>
   )
 }

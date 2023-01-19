@@ -9,6 +9,7 @@ import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom'
 import ChatBox from '../../components/ChatBox/ChatBox';
 import { io } from 'socket.io-client';
+import { createChat } from '../../API/chatRequest';
 
 const Chat = () => {
 
@@ -20,24 +21,40 @@ const Chat = () => {
   const [recieveMessage , setRecieveMessage] = useState(null)
   const socket = useRef()
 
+  //create chat with all following users
+  useEffect(() => {
+
+    const createUserChat = async ()=>{
+      try{
+        const {data} = await createChat({senderId: user._id , receiverId: user.following})
+        console.log("create chat " , data)
+      }catch(error){
+        console.log(error)
+      }
+    }
+   createUserChat()
+  }, [])
+
+
   // Get the chat in chat section
   useEffect(() => {
     const getChat = async () => {
       try {
         const { data } = await userChat(user._id)
         setChat(data)
-        // console.log(data)
+        console.log("chat updated",data)
       }
       catch (error) {
         console.log(error)
       }
     }
     getChat()
-  }, [user])
+  }, [user])      
 
   //conect to socket server
  useEffect(() => {
     socket.current = io("ws://localhost:8800")
+    // socket.current = io("https://collegeera.onrender.com")
     socket.current.emit("new-user-add" , user._id)
     socket.current.on("get-users", (users)=>{
       setOnlineUsers(users);
@@ -65,6 +82,7 @@ const Chat = () => {
     return online ? true : false
   }
 
+  console.log("All chats" ,chat)
   return (
     <div className="Chat relative grid gap-4">
 
@@ -76,6 +94,7 @@ const Chat = () => {
           <div className="chat-list flex flex-col gap-4">
             {
               chat.map((chat) => (
+                
                 <div onClick = {()=>setCurrentChat(chat)}>
                   <Conversation data={chat} currentUser={user._id}  online = {checkOnlinestatus(chat)}/>
                 </div>

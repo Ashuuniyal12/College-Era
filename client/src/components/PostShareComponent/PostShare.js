@@ -29,7 +29,10 @@ const PostShare = () => {
         
         const newPost= {
             userId: user._id,
+            name : user.firstname+" "+user.lastname,
             desc: desc.current.value,    
+            profilePicture: user.profilePicture? user.profilePicture : 'defaultProfile.png',
+            username: user.username,
         }
         //upload the image part in the server.
         if(img){
