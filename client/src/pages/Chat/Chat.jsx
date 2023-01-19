@@ -53,8 +53,8 @@ const Chat = () => {
 
   //conect to socket server
  useEffect(() => {
-    socket.current = io("ws://localhost:8800")
-    // socket.current = io("https://collegeera.onrender.com")
+    //socket.current = io("ws://localhost:8800")
+    socket.current = io("https://collegeera-socket.onrender.com")
     socket.current.emit("new-user-add" , user._id)
     socket.current.on("get-users", (users)=>{
       setOnlineUsers(users);
