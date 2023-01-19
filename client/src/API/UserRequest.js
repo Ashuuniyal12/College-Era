@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
-// const API = axios.create({ baseURL: 'https://collegeera-server.onrender.com' });
+ // const API = axios.create({ baseURL: 'http://localhost:5000' });
+ const API = axios.create({ baseURL: 'https://collegeera-server-v9vm.onrender.com' });
 
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
