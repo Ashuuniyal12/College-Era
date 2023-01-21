@@ -65,7 +65,7 @@ const Auth = () => {
 
                     <b><h4>{isSignUp ? 'Sign Up' : 'Log In'}</h4></b>
 
-                    {error && !isSignUp && <p className="text-red-500">{msg.message}</p>}
+                    {/* {error && !isSignUp && <p className="text-red-500">{msg.message}</p>} */}
 
                     {isSignUp &&
                         <div>
