@@ -1,63 +1,58 @@
 import React, { useState, useRef } from 'react'
 import './PostShare.css'
 import ProfileImg from '../../img/profileImg.png'
-import {UilScenery,  UilPlayCircle, UilLocationPoint, UilSchedule, UilTimes } from '@iconscout/react-unicons'
-import {useDispatch, useSelector} from 'react-redux'
-import { uploadImg, uploadPost } from '../../actions/uploadAction'
+import { UilScenery, UilPlayCircle, UilLocationPoint, UilSchedule, UilTimes } from '@iconscout/react-unicons'
+import { useDispatch, useSelector } from 'react-redux'
+import {  uploadPost } from '../../actions/uploadAction'
+import defaultProfile from '../../img/defaultProfile.png'
+
 
 const PostShare = () => {
-    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
     const loading = useSelector(state => state.postReducer.uploading)
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.authReducer.authData)
-    const [img, setImg] = useState(null);
+    const { user } = useSelector(state => state.authReducer.authData)
+    const [img, setImg] = useState("");
     const imgRef = useRef();
     const desc = useRef();
     const onImageChange = (e) => {
+        let res ="";
         if (e.target.files && e.target.files[0]) {
             let img = e.target.files[0];
-            setImg(img);
+            var reader = new FileReader();
+            reader.readAsDataURL(img);
+            reader.onload = () => {
+                res= reader.result //base64encoded string
+                setImg(res);
+                console.log("res", res);
+              };     
         }
     }
-    const reset=()=>{
+    const reset = () => {
         setImg(null);
-        desc.current.value='';
+        desc.current.value = '';
     }
 
-    const handleSubmit=(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        
-        const newPost= {
+
+        const newPost = {
             userId: user._id,
-            name : user.firstname+" "+user.lastname,
-            desc: desc.current.value,    
-            profilePicture: user.profilePicture? user.profilePicture : 'defaultProfile.png',
+            name: user.firstname + " " + user.lastname,
+            desc: desc.current.value,
+            profilePicture: user.profilePicture ? user.profilePicture : 'defaultProfile.png',
             username: user.username,
+            img: img
         }
-        //upload the image part in the server.
-        if(img){
-            const data = new FormData();
-            const fileName = Date.now() + img.name;
-            data.append("name", fileName);
-            data.append("file", img);
-            newPost.img = fileName;
-
-            try{
-                dispatch(uploadImg(data));
-
-            }catch(err){
-                console.log(err)
-            }
-        }
-
+        console.log(newPost);
         dispatch(uploadPost(newPost))
         reset();
     }
+
     return (
         <div className="PostShare flex gap-4 p-4 rounded-2xl">
-            <img src={user.profilePicture? serverPublic+user.profilePicture : serverPublic+'defaultProfile.png'} alt="ProfileImg" />
+            <img src={user.profilePicture ? user.profilePicture : defaultProfile} alt="ProfileImg" />
             <div>
-                <input ref ={desc} required type="text" placeholder="What's happening" />
+                <input ref={desc} required type="text" placeholder="What's happening" />
 
                 <div className='PostOption flex  justify-around'>
 
@@ -87,10 +82,11 @@ const PostShare = () => {
                     </div>
                 </div>
 
+
                 {img && (
                     <div className="previewImage">
-                        <UilTimes onClick={() => { setImg(null) }} />
-                        <img src={URL.createObjectURL(img)} alt="preview" />
+                        <UilTimes onClick={() => { setImg("") }} />
+                        <img src={img} alt="preview" />
                     </div>
                 )}
 

@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import { signUp , logIn} from '../../actions/AuthAction'
 
 const Auth = () => {
+
+    let error = true;
     const [isSignUp, setIsSignUp] = useState(true);
 
     const [data, setData] = useState({ firstname: '', lastname: '', email: '', password: '', confirmpassword: '', username: '' });
@@ -14,6 +16,7 @@ const Auth = () => {
     const dispatch = useDispatch();
     
     const loading  = useSelector((state) => state.authReducer.loading);
+    const msg = useSelector((state) => state.authReducer.msg);
 
     const onSignUpChange = () => {
         setIsSignUp(!isSignUp)
@@ -32,6 +35,13 @@ const Auth = () => {
           
         }else{
             dispatch(logIn(data))
+            if(msg.message === 'OK'){
+                error = false
+            }
+            else{
+                error = true
+                resetForm()
+            }
         }
         
     }
@@ -54,6 +64,8 @@ const Auth = () => {
                 <form className="infoForm authForm flex flex-col justify-center items-center gap-8" onSubmit={handleSubmitChange}>
 
                     <b><h4>{isSignUp ? 'Sign Up' : 'Log In'}</h4></b>
+
+                    {error && !isSignUp && <p className="text-red-500">{msg.message}</p>}
 
                     {isSignUp &&
                         <div>
