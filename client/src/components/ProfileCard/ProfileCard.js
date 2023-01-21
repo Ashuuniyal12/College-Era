@@ -4,6 +4,8 @@ import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as UserApi from '../../API/UserRequest'
+import defaultProfile from '../../img/defaultProfile.png'
+import defaultCover from '../../img/defaultCover.png'
 
 const ProfileCard = ({location}) => {
 
@@ -14,15 +16,14 @@ const ProfileCard = ({location}) => {
 
     const dispatch = useDispatch()
     const { user } = useSelector(state => state.authReducer.authData)
-    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
     const posts = useSelector(state => state.postReducer.posts)
 
 
     return (
         <div className="ProfileCard flex relative gap-4 "style= {{width: width}}>
             <div className="ProfileImages relative flex flex-col items-center justify-center">
-                <img src={user.coverPicture ? serverPublic + user.coverPicture : serverPublic + 'defaultCover.png'} alt="Cover Image" />
-                <img src={user.profilePicture ? serverPublic + user.profilePicture : serverPublic + 'defaultProfile.png'} alt="Profile Image" />
+                <img src={user.coverPicture ? user.coverPicture : defaultCover} alt="Cover Image" />
+                <img src={user.profilePicture ? user.profilePicture :defaultProfile} alt="Profile Image" />
             </div>
 
             <div className="ProfileName flex flex-col items-center mt-12 gap-3">

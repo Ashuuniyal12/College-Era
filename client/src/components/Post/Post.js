@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Post.css'
 import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux'
 import { likePost } from '../../API/PostRequest'
+import defaultProfile from '../../img/defaultProfile.png'
 
 
 
@@ -20,6 +21,25 @@ const Post = ({ data }) => {
     likePost(data._id, user._id);
     liked ? setLikeCount((prev) => prev - 1) : setLikeCount((prev) => prev + 1)
   }
+  
+  // const [imageUrls, setImageUrls] = useState([]);
+
+  // const imagesListRef = ref(storage, "images/+data.img");
+
+  // const url = '';
+
+  // useEffect(() => {
+  //   listAll(imagesListRef).then((response) => {
+  //     response.items.forEach((item) => {
+  //       getDownloadURL(item).then((url) => {
+  //         setImageUrls((prev) => [...prev, url]);
+  //       });
+  //     });
+  //   });
+  // }, []);
+
+  // console.log("imageUrls", imageUrls)
+
   console.log("data", data)
   return (
     <div className="Post flex flex-col p-4 gap-4 rounded-2xl" styel={{ backgoundColor: 'var(--cardColor)' }}>
@@ -27,17 +47,17 @@ const Post = ({ data }) => {
         <img src={ data.userId} alt="img" />
       </div>   */}
       <div className=' profileDetails flex flex-row gap-2 '>
-        <img className="rounded-full w-10 h-10" src={data.profilePicture ? process.env.REACT_APP_PUBLIC_FOLDER + data.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"} />
+        <img className="rounded-full w-10 h-10" src={data.profilePicture ? data.profilePicture : defaultProfile} />
         <span >{data.name}</span>
       </div>
       <div className="Details">
         <span><b>{data.username} </b></span>
         <span>{data.desc}</span>
       </div>
-      { data.img &&
+      {data.img &&
         <div className='image-holder'>
-       <img className="" src={process.env.REACT_APP_PUBLIC_FOLDER + data.img} alt="image" />
-      </div>
+        <img className="" src={data.img} alt="image" /> 
+        </div>
       }
       <div className="PostReact flex items-start gap-6">
 

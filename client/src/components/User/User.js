@@ -2,11 +2,11 @@ import React ,{useState} from 'react'
 import { useDispatch , useSelector } from 'react-redux'
 import { followUser , unfollowUser} from '../../actions/userAction';
 import '../FollowersCard/FollowersCard.css'
+import defaultProfile from "../../img/defaultProfile.png"
 
 const User = ({person}) => {
 
     const dispatch = useDispatch();
-    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
     const { user } = useSelector((state) => state.authReducer.authData);
     const [following , setFollowing] = useState(person.followers.includes(user._id));
 
@@ -19,7 +19,7 @@ const User = ({person}) => {
     return (
         <div className="follower flex justify-between items-center">
             <div className=" flex gap-3">
-                <img src={person.profilePicture ? serverPublic + person.profilePicture : serverPublic + "defaultProfile.png"} alt="image"
+                <img src={person.profilePicture ? person.profilePicture : defaultProfile} alt="image"
                     className="followerImg w-14 h-14 rounded-full" />
                 <div className="name flex flex-col items-start justify-center">
                     <span>{person.firstname +" "+person.lastname}</span>
