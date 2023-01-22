@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getUser } from '../../API/UserRequest'
+import defaultProfile from '../../img/defaultProfile.png'
 
 const Conversation = ({ data, currentUser, online }) => {
 
@@ -28,8 +29,7 @@ const Conversation = ({ data, currentUser, online }) => {
                 <div className='flex flex-row gap-2'>
                     <div>
                         {online && <div className="online-dot"></div>}
-                        <img src={userData?.profilePicture ? process.env.REACT_APP_PUBLIC_FOLDER + userData.profilePicture :
-                            process.env.REACT_APP_PUBLIC_FOLDER + 'defaultProfile.png'} alt="image of user"
+                        <img src={userData?.profilePicture ? userData.profilePicture : defaultProfile} alt="image of user"
                             className="followerImage"
                             style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                         />
