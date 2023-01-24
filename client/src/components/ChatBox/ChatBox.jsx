@@ -94,8 +94,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
                         <div className="chat-header">
                             <div className="follower">
                                 <div className='flex flex-row gap-2'>
-                                    <img src={userData?.profilePicture ? process.env.REACT_APP_PUBLIC_FOLDER + userData.profilePicture :
-                                        process.env.REACT_APP_PUBLIC_FOLDER + 'defaultProfile.png'} alt="image of user"
+                                    <img src={userData?.profilePicture ? userData.profilePicture : 'defaultProfile'} alt="image of user"
                                         className="followerImage"
                                         style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                                     />

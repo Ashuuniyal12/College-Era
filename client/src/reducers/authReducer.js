@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const authReducer = (state = { authData: null, loading: false, error: false , msg: {message : null}}, action) => {
+=======
+const authReducer = (state = { authData: null, loading: false, error: false , msg:{message : null }}, action) => {
+>>>>>>> 84eedbbcc977f3c4035ef6376cb059b592c45de2
     switch (action.type) {
         case 'AUTH_START':
             return { ...state, loading: true, error: false }
@@ -6,7 +10,7 @@ const authReducer = (state = { authData: null, loading: false, error: false , ms
             localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
             return { ...state, authData: action?.payload, loading: false, error: false }
         case 'AUTH_FAIL':
-            return { ...state,   msg: action?.payload.response.data , loading: false, error: true }
+            return { ...state, msg: action?.payload.response.data , loading: false, error: true }
 
 
             
