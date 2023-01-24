@@ -2,11 +2,6 @@ import React from 'react'
 import { Modal, useMantineTheme } from '@mantine/core';
 import defaultCover from '../../img/defaultCover.png';
 import defaultProfile from '../../img/defaultProfile.png';
-<<<<<<< HEAD
-
-=======
-import { Icon } from '@iconify/react';
->>>>>>> 84eedbbcc977f3c4035ef6376cb059b592c45de2
 
 const FollowerUserProfile = ({ modalOpened, setmodalOpened, data }) => {
 
