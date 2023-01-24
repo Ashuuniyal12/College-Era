@@ -64,13 +64,8 @@ const Auth = () => {
                 <form className="infoForm authForm flex flex-col justify-center items-center gap-8" onSubmit={handleSubmitChange}>
 
                     <b><h4>{isSignUp ? 'Sign Up' : 'Log In'}</h4></b>
-<<<<<<< HEAD
-
-                    {/* {error && !isSignUp && <p className="text-red-500">{msg.message}</p>} */}
-=======
                    { console.log("message ", msg)}
                     {error && !isSignUp && <p className="text-red-500">{msg.message}</p>}
->>>>>>> 84eedbbcc977f3c4035ef6376cb059b592c45de2
 
                     {isSignUp &&
                         <div>
